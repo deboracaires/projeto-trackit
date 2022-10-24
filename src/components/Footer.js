@@ -3,15 +3,16 @@ import {
     CircularProgressbar,
     buildStyles
   } from "react-circular-progressbar";
-  import "react-circular-progressbar/dist/styles.css";
+import "react-circular-progressbar/dist/styles.css";
+import { Link } from "react-router-dom";
 
 export default function Footer(){
     return (
         <FooterContainer>
-            <span>Hábitos</span>
+            <Link to='/habitos'>Hábitos</Link>
             <ContainerCircle>
             <CircularProgressbar
-                value={0}
+                value={50}
                 text={"Hoje"}
                 background
                 backgroundPadding={6}
@@ -23,7 +24,7 @@ export default function Footer(){
                 })}
             />
             </ContainerCircle>
-            <span>Histórico</span>
+            <Link to='/historico'>Histórico</Link>
         </FooterContainer>
     )
 }
@@ -47,9 +48,16 @@ color: #52B6FF;
 display: flex;
 justify-content: space-around;
 align-items: center;
+
+a{
+    text-decoration: none;
+    color: #52B6FF;
+}
+
 `
 
 const ContainerCircle = styled.div`
+    margin-bottom: 15px;
     width: 80px;
 
 `

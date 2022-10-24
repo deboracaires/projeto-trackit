@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import userImage from "../assets/images/user.png"
+import { useLoginProvider } from "../contexts/LoginContext";
 
 export default function NavBar(){
+
+    const {user, handleLogin} = useLoginProvider();
+
     return (
         <Header>
             <h1>TrackIt</h1>
-            <img data-identifier="avatar" src={userImage}/>
+            <img data-identifier="avatar" src={user.image} alt="imagem usuario"/>
         </Header>
     )
 }

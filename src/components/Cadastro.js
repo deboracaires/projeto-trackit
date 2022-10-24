@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Cadastro() {
     return (
         <CadastroContainer>
-            <img src={logo} />
+            <img src={logo} alt="logo track it" />
             <Form>
                 <form >
                     <div>
@@ -16,7 +16,7 @@ export default function Cadastro() {
                         <input type="password" placeholder="senha" />
                     </div>
                     <div>
-                        <input placeholder="nome" />
+                        <input type="text" placeholder="nome" />
                     </div>
                     <div>
                         <input placeholder="foto" />

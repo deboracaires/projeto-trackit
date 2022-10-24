@@ -1,23 +1,42 @@
 import styled from "styled-components";
 import logo from "../assets/images/logotrackit.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {useState, useEffect, useContext} from "react";
+import { useLoginProvider } from "../contexts/LoginContext";
+
+
 export default function Login() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const {user, handleLogin} = useLoginProvider();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await handleLogin(email, password);
+        navigate("/habitos")
+
+        console.log("submit", {email, password} )
+    };
+
     return (
+      
         <LoginContainer>
-            <img src={logo} />
+            <img src={logo} alt="logo track it"/>
             <Form>
-                <form >
+                <form onSubmit={handleSubmit}>
                     <div>
-                        <input type="email" placeholder="email" />
+                        <input type="email" placeholder="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     </div>
                     <div>
-                        <input type="password" placeholder="senha" />
+                        <input type="password" placeholder="senha" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <button type="submit">Entrar</button>
                 </form>
             </Form>
             <Link to='/cadastro'>Não tem uma conta? Cadastre-se</Link>
         </LoginContainer>
+    
     )
 }
 
