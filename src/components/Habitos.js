@@ -1,40 +1,212 @@
 import styled from "styled-components";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+import axios from "axios";
+import { useEffect, useState, useContext } from "react";
+import { useLoginProvider } from "../contexts/LoginContext";
+
+export default function Habitos() {
+
+    const weekdays = ["D", "S", "T", "Q", "Q", "S", "S"];
+    const [habit, setHabit] = useState("");
+    const [days, setDays] = useState([]);
+    const { token } = useLoginProvider();
+    console.log(token);
+    const [getHabit, setgetHabit] = useState([]);
+    const [selectedDays, setSelectedDays] = useState([]);
+
+    const [open, setOpen] = useState(false);
+
+    function selectDay(i) {
+        if (selectedDays.length === 0) {
+            setSelectedDays([i]);
+            return;
+        }
+        if (i === 0) {
+            if (selectedDays.includes(0)) {
+                const filtredArr = selectedDays.filter((day) => day != i)
+                setSelectedDays(filtredArr);
+
+                return;
+            }
+
+            else {
+                const temp = selectedDays;
+                temp.push(i);
+                setSelectedDays(temp)
+                return;
+            }
+        }
+        
+        
+        if (i === 1) {
+            if (selectedDays.includes(1)) {
+                const filtredArr = selectedDays.filter((day) => day != i)
+                setSelectedDays(filtredArr);
+
+                return;
+            }
+
+            else {
+                const temp = selectedDays;
+                temp.push(i);
+                setSelectedDays(temp)
+                return;
+            }
+        }
+
+        if (i === 2) {
+            if (selectedDays.includes(2)) {
+                const filtredArr = selectedDays.filter((day) => day != i)
+                setSelectedDays(filtredArr);
+                return;
+            }
+
+            else {
+                const temp = selectedDays;
+                temp.push(i);
+                setSelectedDays(temp)
+                return;
+            }
+        }
+
+        if (i === 3) {
+            if (selectedDays.includes(3)) {
+                const filtredArr = selectedDays.filter((day) => day != i)
+                setSelectedDays(filtredArr);
+                return;
+            }
+
+            else {
+                const temp = selectedDays;
+                temp.push(i);
+                setSelectedDays(temp)
+                return;
+            }
+        }
+
+        if (i === 4) {
+            if (selectedDays.includes(4)) {
+                const filtredArr = selectedDays.filter((day) => day != i)
+                setSelectedDays(filtredArr);
+
+                return;
+            }
+
+            else {
+                const temp = selectedDays;
+                temp.push(i);
+                setSelectedDays(temp)
+                return;
+            }
+        }
+
+        if (i === 5) {
+            if (selectedDays.includes(5)) {
+                const filtredArr = selectedDays.filter((day) => day != i)
+                setSelectedDays(filtredArr);
+
+                return;
+            }
+
+            else {
+                const temp = selectedDays;
+                temp.push(i);
+                setSelectedDays(temp)
+                return;
+            }
+        }
+
+        if (i === 6) {
+            if (selectedDays.includes(6)) {
+                const filtredArr = selectedDays.filter((day) => day != i)
+                setSelectedDays(filtredArr);
+
+                return;
+            }
+
+            else {
+                const temp = selectedDays;
+                temp.push(i);
+                setSelectedDays(temp)
+                return;
+            }
+        }
+    }
+
+    console.log(selectedDays);
 
 
-export default function Habitos(){
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const body = {
+            name: habit,
+            days: selectedDays,
+        }
+
+        console.log(body);
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        }
+
+        await axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config)
+            .then(res => {
+                setHabit(res.data);
+                console.log(res);
+
+            })
+            .catch(err => alert(err.response.data))
+    }
+
+        useEffect(() => {
+            const config = {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+    
+               const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
+                promise.then(res => {
+
+                    setgetHabit(res.data) 
+                  
+                })
+                promise.catch(err => console.log(err.response.data))
+        }, [])
+    
+
+
     return (
-       <>
-            <NavBar/>
+        <>
+            <NavBar />
             <HabitosContainer>
                 <Corpo>
                     <span>Meus Hábitos</span>
-                    <button>+</button>
-                </Corpo>    
+                    <button onClick={() => { setOpen(!open) }}>+</button>
+                </Corpo>
                 <CriaHabito>
-                    <input name="name" type="text" placeholder="nome do hábito"/>
+                    <input onChange={(e) => setHabit(e.target.value)} name="name" type="text" placeholder="nome do hábito" />
                     <Days>
-                        <button>D</button>
-                        <button>S</button>
-                        <button>T</button>
-                        <button>Q</button>
-                        <button>Q</button>
-                        <button>S</button>
-                        <button>S</button>
+                        {weekdays.map((d, i) => (<button onClick={() => selectDay(i)} key={i}>{d}</button>))}
                     </Days>
 
                     <Cancel>
                         <span>Cancelar</span>
-                        <button>Salvar</button>
+                        <button onClick={handleSubmit}>Salvar</button>
                     </Cancel>
                 </CriaHabito>
+                    {getHabit.length === 0 ? <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text> : <h1>Tô funcionando</h1>
+ }
 
-                <Text>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</Text>
-                
-                </HabitosContainer>
-            <Footer/>
-       </>
+            </HabitosContainer>
+            <Footer />
+        </>
     )
 }
 
@@ -72,9 +244,7 @@ button{
 
     background: #52B6FF;
     border-radius: 4.63636px;
-}
-
-`
+}`
 
 const CriaHabito = styled.div`
     width: 340px;
@@ -83,6 +253,10 @@ const CriaHabito = styled.div`
 
     background: #FFFFFF;
     border-radius: 5px;
+
+    .open {
+        display: none;
+    }
 
     input{
         margin: 18px 0 0 19px;
@@ -106,8 +280,7 @@ const CriaHabito = styled.div`
 
     input:focus {
         padding: 8px;
-    }
-`
+    }`
 
 const Days = styled.div`
     margin-top: 10px;
@@ -132,8 +305,7 @@ const Days = styled.div`
 
     button:nth-child(1){
         margin-left: 19px;
-    }
-`
+    }`
 
 const Cancel = styled.div`
     margin-top: 32px;
@@ -162,8 +334,7 @@ const Cancel = styled.div`
     line-height: 20px;
     text-align: center;
     color: #FFFFFF;
-    }
-`
+    }`
 const Text = styled.span`
     margin-top: 29px;
     font-family: 'Lexend Deca';
@@ -174,6 +345,4 @@ const Text = styled.span`
     color: #666666;
 
     width: 338px;
-    height: 74px;
-
-`
+    height: 74px;`

@@ -1,27 +1,61 @@
 import styled from "styled-components";
 import logo from "../assets/images/logotrackit.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 
-export default function Cadastro() {
+export default function Cadastro(props) {
+
+    // const { setUserImage } = props;
+
+    const navigate = useNavigate();
+    const [form, setForm] = useState({
+        email: "",
+        name: "",
+        image: "",
+        password: ""
+    });
+
+    function sendData(e) {
+        e.preventDefault();
+        axios
+            .post(
+                "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", form)
+            .then((res) => {
+                navigate("/");
+            
+            })
+            .catch((err) => {
+                alert(err.response.data.message);
+            });
+    }
+
+    function handleForm(e) {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    }
+
+
+
     return (
         <CadastroContainer>
             <img src={logo} alt="logo track it" />
             <Form>
-                <form >
+                <form onSubmit={sendData}>
                     <div>
-                        <input type="email" placeholder="email" />
+                        <input data-identifier="input-email" name="email" type="email" placeholder="email" onChange={handleForm}
+                            value={form.email} />
+
+                        <input data-identifier="input-password" name="password" type="password" placeholder="senha" onChange={handleForm}
+                            value={form.password} />
+
+                        <input data-identifier="input-name" name="name" type="text" placeholder="nome" onChange={handleForm}
+                            value={form.name} />
+
+                        <input data-identifier="input-photo" name="image" type="url" placeholder="url foto" onChange={handleForm}
+                            value={form.image} />
                     </div>
-                    <div>
-                        <input type="password" placeholder="senha" />
-                    </div>
-                    <div>
-                        <input type="text" placeholder="nome" />
-                    </div>
-                    <div>
-                        <input placeholder="foto" />
-                    </div>
-                    <button type="submit">Cadastrar</button>
+                    <button data-identifier="back-to-login-action" type="submit">Cadastrar</button>
                 </form>
             </Form>
             <Link to='/'>Já tem uma conta? Faça login!</Link>

@@ -1,15 +1,26 @@
 import styled from "styled-components";
-import userImage from "../assets/images/user.png"
 import { useLoginProvider } from "../contexts/LoginContext";
 
-export default function NavBar(){
+export default function NavBar() {
 
-    const {user, handleLogin} = useLoginProvider();
+    const { user, handleLogin } = useLoginProvider();
+    const savedImage = localStorage.getItem("keepUser");
+
+
+    if (savedImage) {
+
+        const image = JSON.parse(savedImage).data.image;
+
+        return (<Header>
+            <h1>TrackIt</h1>
+            <img data-identifier="avatar" src={image} alt="imagem usuario" />
+        </Header>)
+    }
 
     return (
         <Header>
             <h1>TrackIt</h1>
-            <img data-identifier="avatar" src={user.image} alt="imagem usuario"/>
+            <img data-identifier="avatar" src={user.image} alt="imagem usuario" />
         </Header>
     )
 }

@@ -14,9 +14,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await handleLogin(email, password);
-        navigate("/habitos")
-
-        console.log("submit", {email, password} )
+        navigate("/hoje")
     };
 
     return (
@@ -26,15 +24,15 @@ export default function Login() {
             <Form>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <input type="email" placeholder="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        <input data-identifier="input-email" type="email" placeholder="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     </div>
                     <div>
-                        <input type="password" placeholder="senha" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <input data-identifier="input-password" type="password" placeholder="senha" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
-                    <button type="submit">Entrar</button>
+                    <button data-identifier="login-btn" type="submit">Entrar</button>
                 </form>
             </Form>
-            <Link to='/cadastro'>Não tem uma conta? Cadastre-se</Link>
+            <Link data-identifier="sign-up-action" to='/cadastro'>Não tem uma conta? Cadastre-se</Link>
         </LoginContainer>
     
     )

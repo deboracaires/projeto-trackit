@@ -1,13 +1,12 @@
-import { createContext, useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useState, useContext } from "react";
 import axios from "axios";
 
 export const LoginContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const [token, setToken] = useState("");
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState("");
+
 
   const handleLogin = async (email, password) => {
     const body = {
@@ -16,20 +15,16 @@ export default function AuthProvider({ children }) {
 
     const response = await axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`, body);
     localStorage.setItem("image", JSON.stringify(response.data.image));
-    localStorage.setItem("token", JSON.stringify(response.data.token));
+    localStorage.setItem("keepUser", JSON.stringify(response));
     setUser(response.data);
-    console.log(response);
-
+    setToken(response.data.token);
   }
 
-  //   if(recoveredUser && token){
-  //     setUser(JSON.parse(recoveredUser));
-  //     api.defaults.headers.Authorization = `Bearer ${token}`;
-  // }
+  console.log(token);
 
 
   return (
-    <LoginContext.Provider value={{ handleLogin, user }}>
+    <LoginContext.Provider value={{ handleLogin, user, token }}>
       {children}
     </LoginContext.Provider>
   );

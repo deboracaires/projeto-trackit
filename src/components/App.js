@@ -7,25 +7,27 @@ import Cadastro from "./Cadastro";
 import Habitos from "./Habitos";
 import Historico from "./Historico";
 import AuthProvider from "../contexts/LoginContext";
+import Hoje from "./Hoje";
 
 function App() {
   return (
     <>
-    <AuthProvider>
-    <Router>
-     
-      <GlobalStyle />
-      {/* <NavBar /> */}
-      {/* <Footer/> */}
-      <Routes>
-        <Route path="/" element={<Login/>} />
-        <Route path="/cadastro" element={<Cadastro/>} />
-        <Route path="/habitos"  element={<Habitos/>} />
-        <Route path="/historico" element={<Historico/>} />
-      </Routes>
-     
-    </Router>
-    </AuthProvider>
+      <AuthProvider>
+        <Router>
+
+          <GlobalStyle />
+          {/* <NavBar /> */}
+          {/* <Footer/> */}
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/cadastro" element={<Cadastro />} />
+            <Route path="/habitos" element={<Habitos />} />
+            <Route path="/historico" element={<Historico />} />
+            <Route path="/hoje" element={<Hoje />} />
+          </Routes>
+
+        </Router>
+      </AuthProvider>
     </>
   );
 }

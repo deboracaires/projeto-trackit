@@ -10,6 +10,7 @@ export default function Footer(){
     return (
         <FooterContainer>
             <Link to='/habitos'>Hábitos</Link>
+            <Link to="/hoje">
             <ContainerCircle>
             <CircularProgressbar
                 value={50}
@@ -24,6 +25,7 @@ export default function Footer(){
                 })}
             />
             </ContainerCircle>
+            </Link>
             <Link to='/historico'>Histórico</Link>
         </FooterContainer>
     )
